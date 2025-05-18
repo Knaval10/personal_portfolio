@@ -1,9 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
-import { toast } from "@/app/components/ui/use-toast";
 
 interface Education {
   institution: string;
@@ -34,10 +33,10 @@ export default function EducationAdmin() {
     e.preventDefault();
     // Here you would typically send this data to your backend
     console.log("Submitting education:", educations);
-    toast({
-      title: "Education Updated",
-      description: "Your education history has been updated successfully.",
-    });
+    // toast({
+    //   title: "Education Updated",
+    //   description: "Your education history has been updated successfully.",
+    // });
   };
 
   return (

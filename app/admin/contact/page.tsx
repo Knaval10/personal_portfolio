@@ -1,9 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
-import { toast } from "@/app/components/ui/use-toast";
 
 export default function ContactAdmin() {
   const [contact, setContact] = useState({

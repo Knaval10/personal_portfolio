@@ -1,6 +1,6 @@
 "use client";
 
-import { toast } from "@/app/components/ui/use-toast";
+// import { toast } from "@/app/components/ui/use-toast";
 import React, { useState } from "react";
 
 const Contact = () => {
@@ -55,7 +55,7 @@ const Contact = () => {
 
         const result = await response.json();
         console.log("Form submitted successfully:", result);
-        toast.toString();
+        // toast.toString();
         setData(initialValues);
         setError(initialValues);
       } catch (error) {

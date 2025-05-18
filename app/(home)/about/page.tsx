@@ -69,7 +69,9 @@ const About = () => {
       </section> */}
       {aboutData &&
         aboutData?.length > 0 &&
-        aboutData.map((item, idx) => <p>{item?.content}</p>)}
+        aboutData.map((item: any, idx: number) => (
+          <p key={idx}>{item?.content}</p>
+        ))}
     </main>
   );
 };

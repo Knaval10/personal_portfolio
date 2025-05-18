@@ -1,9 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
-import { toast } from "../../components/ui/use-toast";
 
 export default function AboutAdmin() {
   const [about, setAbout] = useState("");
@@ -11,10 +10,10 @@ export default function AboutAdmin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Submitting about:", about);
-    toast({
-      title: "About Updated",
-      description: "Your about section has been updated successfully.",
-    });
+    // toast({
+    //   title: "About Updated",
+    //   description: "Your about section has been updated successfully.",
+    // });
   };
 
   return (
