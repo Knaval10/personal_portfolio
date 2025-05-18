@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import profilePic from "../assets/image/NabalPP.jpg";
 import coverPic from "../assets/image/programming.jpg";
 import Tab from "../components/Tab.tsx/page";
+import { Span } from "next/dist/trace";
 const tabItem = [
   {
     id: 1,
@@ -119,15 +120,16 @@ const Home = () => {
             setSelectedItem={setSelectedItem}
           />
           {selectedItem === 1 ? (
-            <div className="flex flex-col sm:flex-row w-full bg-gray-400 p-2">
-              <article className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col sm:flex-row gap-5 w-full bg-gray-400 p-2">
+              <article className="flex flex-col gap-2 w-full sm:w-1/2">
                 <h2>About</h2>
                 <div className="flex flex-col gap-1 w-full">
                   {aboutCategory?.map((abt) => (
                     <div
                       key={abt?.id}
+                      role="button"
                       onClick={() => setActiveAbout(abt?.id)}
-                      className={`px-1 w-full ${
+                      className={`px-1 w-full hover:bg-red-300 ${
                         activeAbout === abt?.id ? "bg-blue-300 rounded-lg" : ""
                       }`}
                     >
@@ -137,7 +139,19 @@ const Home = () => {
                 </div>
               </article>
               <hr className="flex-1 " />
-              <div className="flex flex-col gap-2">asdf</div>
+              <div className="flex flex-col gap-2 w-full sm:w-1/2">
+                {activeAbout === 1 ? (
+                  <span>My name is Nabal Khadka</span>
+                ) : activeAbout === 2 ? (
+                  <span>Itahari-18, Sunsari, Nepal</span>
+                ) : activeAbout === 3 ? (
+                  <span>9811312998</span>
+                ) : activeAbout === 4 ? (
+                  <span>Computer Engineering</span>
+                ) : (
+                  <span>Software Developement</span>
+                )}
+              </div>
             </div>
           ) : selectedItem === 2 ? (
             <div className="border">2</div>

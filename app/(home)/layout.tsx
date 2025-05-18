@@ -28,8 +28,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <div>{children}</div>
+        <div className="bg-gradient-to-b from-[#001856] via-[#007ADD] to-[#00CADA] min-h-screen">
+          <Navbar />
+          <div className="min-h-[calc(100vh-72px)]">{children}</div>
+        </div>
       </body>
     </html>
   );

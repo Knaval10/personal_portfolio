@@ -29,10 +29,9 @@ const About = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  console.log("about", aboutData);
   return (
-    <main className="w-full bg-gradient-to-b from-[#001856] via-[#007ADD] to-[#00CADA] h-[93vh] px-5 flex flex-col justify-center">
-      <section className="flex flex-col gap-4">
+    <main className="w-full px-5 py-10 flex flex-col justify-center h-full">
+      {/* <section className="flex flex-col gap-4">
         <article className="flex flex-col gap-2">
           <h2>
             Hello, I'm{" "}
@@ -67,7 +66,10 @@ const About = () => {
             network.
           </p>
         </article>
-      </section>
+      </section> */}
+      {aboutData &&
+        aboutData?.length > 0 &&
+        aboutData.map((item, idx) => <p>{item?.content}</p>)}
     </main>
   );
 };
