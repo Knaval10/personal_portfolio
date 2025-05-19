@@ -4,6 +4,8 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
+    console.log("DATABASE_URL:", process.env.DATABASE_URL); // ✅ TEMP LOG
+
     const data = await prisma.about.findMany();
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
