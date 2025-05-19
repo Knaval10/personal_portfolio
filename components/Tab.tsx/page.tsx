@@ -1,25 +1,41 @@
 import React from "react";
-interface tabType {
+
+interface TabItem {
   id: number;
   title: string;
-  selectedItem: any;
-  setSelectedItem: any;
 }
-const Tab = ({ tabItem, selectedItem, setSelectedItem }: any) => {
+
+interface TabProps {
+  tabItem: TabItem[];
+  selectedItem: number;
+  setSelectedItem: (id: number) => void;
+}
+
+const Tab: React.FC<TabProps> = ({
+  tabItem,
+  selectedItem,
+  setSelectedItem,
+}) => {
   return (
     <div className="flex gap-2">
-      {tabItem?.map((item: any) => (
+      {tabItem?.map((item) => (
         <div
-          key={item?.id}
+          key={item.id}
           role="button"
-          onClick={() => setSelectedItem(item?.id)}
-          className={`px-1 ${
-            selectedItem === item?.id
+          tabIndex={0} // for accessibility
+          onClick={() => setSelectedItem(item.id)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setSelectedItem(item.id);
+            }
+          }}
+          className={`px-1 cursor-pointer ${
+            selectedItem === item.id
               ? "text-red-500 border-b-2 border-red-500"
               : ""
           }`}
         >
-          {item?.title}
+          {item.title}
         </div>
       ))}
     </div>

@@ -21,10 +21,10 @@ export default function ContactAdmin() {
     e.preventDefault();
     // Here you would typically send this data to your backend
     console.log("Submitting contact:", contact);
-    toast({
-      title: "Contact Updated",
-      description: "Your contact information has been updated successfully.",
-    });
+    // toast({
+    //   title: "Contact Updated",
+    //   description: "Your contact information has been updated successfully.",
+    // });
   };
 
   return (

@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import profilePic from "../assets/image/NabalPP.jpg";
 import coverPic from "../assets/image/programming.jpg";
-import { Span } from "next/dist/trace";
 import Tab from "@/components/Tab.tsx/page";
 const tabItem = [
   {

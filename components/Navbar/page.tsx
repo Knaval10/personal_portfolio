@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { title } from "process";
 import React from "react";
 const navData = [
   {
@@ -30,7 +29,7 @@ const Navbar = () => {
         <Link href="/">Name</Link>
       </div>
       <div className="flex items-center gap-4">
-        {navData?.map((nav: any) => (
+        {navData?.map((nav) => (
           <Link key={nav?.id} href={nav?.link}>
             {nav?.title}
           </Link>

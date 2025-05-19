@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import Textarea from "@/components/ui/textarea";
 import { useState } from "react";
 
 export default function AboutAdmin() {

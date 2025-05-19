@@ -1,21 +1,30 @@
 "use client";
 
-// import { toast } from "@/app/components/ui/use-toast";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
-const Contact = () => {
-  const initialValues = { name: "", email: "", message: "" };
-  const [data, setData] = useState(initialValues);
-  const [error, setError] = useState(initialValues);
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
 
-  const handleInputChange = (e: any) => {
+const Contact: React.FC = () => {
+  const initialValues: FormData = { name: "", email: "", message: "" };
+  const [data, setData] = useState<FormData>(initialValues);
+  const [error, setError] = useState<FormData>(initialValues);
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setData((prevData) => ({ ...prevData, [name]: value }));
+    setError((prevError) => ({ ...prevError, [name]: "" })); // Clear error on change
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let isValid = true;
+
     if (!data.name.trim()) {
       setError((prevError) => ({ ...prevError, name: "Enter your name" }));
       isValid = false;
@@ -39,6 +48,7 @@ const Contact = () => {
       }));
       isValid = false;
     }
+
     if (isValid) {
       try {
         const response = await fetch("/api/update-contact/", {
@@ -46,16 +56,11 @@ const Contact = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            name: data.name,
-            email: data.email,
-            message: data.message,
-          }),
+          body: JSON.stringify(data),
         });
 
         const result = await response.json();
         console.log("Form submitted successfully:", result);
-        // toast.toString();
         setData(initialValues);
         setError(initialValues);
       } catch (error) {
@@ -63,15 +68,15 @@ const Contact = () => {
       }
     }
   };
+
   return (
-    <form onSubmit={handleSubmit} action="" className="flex flex-col gap-3 p-5">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-5">
       <article className="flex flex-col gap-2">
         <span>Name</span>
         <input
           type="text"
           name="name"
           value={data.name}
-          id=""
           onChange={handleInputChange}
           className="text-black p-2 rounded-lg"
         />
@@ -79,13 +84,13 @@ const Contact = () => {
           <span className="text-red-500 text-sm">{error.name}</span>
         )}
       </article>
+
       <article className="flex flex-col gap-2">
         <span>Email</span>
         <input
           type="text"
           name="email"
           value={data.email}
-          id=""
           onChange={handleInputChange}
           className="text-black p-2 rounded-lg"
         />
@@ -93,12 +98,12 @@ const Contact = () => {
           <span className="text-red-500 text-sm">{error.email}</span>
         )}
       </article>
+
       <article className="flex flex-col gap-2">
         <span>Message</span>
         <textarea
           name="message"
           value={data.message}
-          id=""
           onChange={handleInputChange}
           className="text-black p-2 rounded-lg"
         />
@@ -106,6 +111,7 @@ const Contact = () => {
           <span className="text-red-500 text-sm">{error.message}</span>
         )}
       </article>
+
       <button
         type="submit"
         className="p-2 bg-green-300 w-fit rounded-lg text-black"

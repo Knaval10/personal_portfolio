@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/app/lib/utils";
 
 const navItems = [
   { href: "/admin", label: "Dashboard" },
@@ -25,10 +24,9 @@ export default function AdminSidebar() {
           <li key={item.href}>
             <Link
               href={item.href}
-              className={cn(
-                "block px-4 py-2 hover:bg-black",
-                pathname === item.href && "bg-black font-semibold"
-              )}
+              className={`
+                block px-4 py-2 hover:bg-black,
+                ${pathname === item.href && "bg-black font-semibold"}`}
             >
               {item.label}
             </Link>

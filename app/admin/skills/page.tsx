@@ -23,10 +23,10 @@ export default function SkillsAdmin() {
     e.preventDefault();
     // Here you would typically send this data to your backend
     console.log("Submitting skills:", skills);
-    toast({
-      title: "Skills Updated",
-      description: "Your skills have been updated successfully.",
-    });
+    // toast({
+    //   title: "Skills Updated",
+    //   description: "Your skills have been updated successfully.",
+    // });
   };
 
   return (
