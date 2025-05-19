@@ -1,19 +1,30 @@
+import { withCors } from "@/app/lib/cors";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET() {
+const handler = async () => {
   try {
-    console.log("DATABASE_URL:", process.env.DATABASE_URL); // ✅ TEMP LOG
-
     const data = await prisma.about.findMany();
-    return new Response(JSON.stringify(data), { status: 200 });
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // or your exact frontend domain
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     return new Response(JSON.stringify({ error: message }), {
       status: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
     });
   } finally {
     await prisma.$disconnect();
   }
-}
+};
+
+export const GET = withCors(handler);
