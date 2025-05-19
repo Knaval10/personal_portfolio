@@ -7,6 +7,7 @@ interface AboutItem {
   id: number;
   content: string;
 }
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const About = () => {
   const [aboutData, setAboutData] = useState<AboutItem[]>([]);
@@ -16,7 +17,7 @@ const About = () => {
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const response = await fetch("/api/update-about");
+        const response = await fetch(`${baseUrl}/api/update-about`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
