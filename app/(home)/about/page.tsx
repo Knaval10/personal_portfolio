@@ -18,9 +18,7 @@ const About = () => {
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const response = await fetch(
-          `https://personal-portfolio-67ce.vercel.app/api/update-about`
-        );
+        const response = await fetch(`api/update-about`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
