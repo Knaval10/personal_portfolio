@@ -24,7 +24,7 @@ const navData = [
 ];
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between w-full p-5 bg-transparent">
+    <div className="flex items-center justify-between w-full p-5 bg-transparent sticky top-0 z-10 backdrop-blur-xl">
       <div className="">
         <Link href="/">Name</Link>
       </div>

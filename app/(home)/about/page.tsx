@@ -1,15 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import profilePic from "../../assets/image/NabalPP.jpg";
 
 // Define the shape of the data returned from the API
 interface AboutItem {
   id: number;
   content: string;
 }
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-console.log("base", baseUrl);
-
+const skillSet = [
+  {
+    id: 1,
+    title: "JavaScript",
+  },
+  {
+    id: 2,
+    title: "React.Js",
+  },
+  {
+    id: 3,
+    title: "Next.Js",
+  },
+  {
+    id: 4,
+    title: "Redux",
+  },
+];
 const About = () => {
   const [aboutData, setAboutData] = useState<AboutItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,12 +58,30 @@ const About = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="w-full px-5 py-10 flex flex-col justify-center h-full">
-      {aboutData.length > 0 ? (
-        aboutData.map((item) => <p key={item.id}>{item.content}</p>)
-      ) : (
-        <p>No about information available.</p>
-      )}
+    <main className="flex justify-center items-center gap-10 px-5 py-10 ">
+      <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
+        <Image
+          src={profilePic}
+          alt={"profile-picture"}
+          className="h-full w-full rounded-bl-[100px]"
+          loading="lazy"
+        />
+      </figure>
+      <div className="w-1/2 flex flex-col justify-center gap-2 h-full">
+        <h2 className="text-3xl font-bold">About Me</h2>
+        {aboutData.length > 0 ? (
+          aboutData.map((item) => <p key={item.id}>{item.content}</p>)
+        ) : (
+          <p>No about information available.</p>
+        )}
+        {skillSet.length > 0
+          ? skillSet.map((item, idx) => (
+              <div key={idx} className="">
+                {item.title}
+              </div>
+            ))
+          : ""}
+      </div>
     </main>
   );
 };
