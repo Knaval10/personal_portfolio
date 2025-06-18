@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import logo from "../../app/assets/icons/N.png";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 const navData = [
   {
     id: 1,
@@ -39,7 +38,6 @@ const navData = [
 ];
 
 const Navbar = () => {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {

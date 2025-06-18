@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 interface ItemType {
   image: string;
   name: string;
@@ -13,7 +14,7 @@ const TestimonyCard = ({ item }: TestimonyProps) => {
   return (
     <div className="relative top-10 min-h-[300px]">
       <figure className="absolute -top-10 right-5 z-10 bg-gradient-to-r from-red-500 to-[#d77a5c] p-1 rounded-full">
-        <img
+        <Image
           src={image}
           alt="profile image"
           className="rounded-full w-24 h-24"
