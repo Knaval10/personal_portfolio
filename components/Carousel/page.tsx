@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Carousel = ({ children }: { children: React.ReactNode }) => {
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
+  // const [width, setWidth] = useState(window.innerWidth);
+  // useEffect(() => {
+  //   const handleResize = () => setWidth(window.innerWidth);
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, [width]);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [width]);
 
   const settings = {
     dots: true,
@@ -23,7 +23,7 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
-    centerMode: width <= 1024 ? true : false,
+    centerMode: true,
     centerPadding: "10%",
     responsive: [
       {
