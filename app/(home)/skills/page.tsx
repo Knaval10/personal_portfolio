@@ -1,49 +1,47 @@
-import React from "react";
-const skills = [
-  {
-    title: "JavaScript",
-    proficiency: "90%",
-  },
-  {
-    title: "React.js",
-    proficiency: "85%",
-  },
-  {
-    title: "Next.js",
-    proficiency: "80%",
-  },
-  {
-    title: "Tailwind CSS",
-    proficiency: "95%",
-  },
-  {
-    title: "Node.js",
-    proficiency: "70%",
-  },
-  {
-    title: "TypeScript",
-    proficiency: "75%",
-  },
-  {
-    title: "HTML & CSS",
-    proficiency: "98%",
-  },
-];
+"use client";
+
+import Header from "@/components/Header/page";
+import React, { useEffect, useState } from "react";
+export interface SkillsType {
+  skill: string;
+  proficiency: string;
+}
 const Skills = () => {
+  const [skills, setSkills] = useState<SkillsType[] | []>([]);
+  useEffect(() => {
+    const fetchSkillsData = async () => {
+      try {
+        const response = await fetch("/api/update-skills");
+        const data = await response.json();
+        setSkills(data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchSkillsData();
+  }, []);
   return (
-    <div className="flex flex-col justify-center  gap-4 p-5">
-      {skills.length > 0 &&
-        skills.map((skill: any, idx: number) => (
-          <article key={idx} className="flex items-center gap-2">
-            <h2 className="w-1/5">{skill.title}</h2>
-            <div className="h-2 bg-white w-4/5">
-              <div
-                className="bg-red-500 h-full"
-                style={{ width: skill.proficiency }}
-              ></div>
-            </div>
-          </article>
-        ))}
+    <div className="flex flex-col gap-10">
+      <Header
+        title={"Skills"}
+        description={
+          "A comprehensive overview of the technical skills and tools I’ve mastered to build efficient and scalable frontend applications."
+        }
+      />
+      <div className="flex flex-col justify-center  gap-4 container p-5">
+        {skills.length > 0 &&
+          skills.map((skill, idx: number) => (
+            <article key={idx} className="flex items-center gap-5">
+              <h2 className="w-1/4">{skill.skill}</h2>
+              <div className="h-2 bg-white w-3/4 rounded-lg">
+                <div
+                  className="bg-gradient-to-r from-red-500 to-orange-300 h-full rounded-lg"
+                  style={{ width: skill.proficiency }}
+                />
+              </div>
+            </article>
+          ))}
+      </div>
     </div>
   );
 };

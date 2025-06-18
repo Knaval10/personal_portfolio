@@ -1,0 +1,26 @@
+.letter {
+    color: white; 
+    animation-name: revealColor; 
+    animation-duration: 0.5s; 
+    animation-fill-mode: forwards; 
+    animation-timing-function: ease-in-out; 
+    animation-play-state: paused; 
+    display: inline-block;
+  }
+  
+  @keyframes revealColor {
+    from {
+      color: white; 
+    }
+    to {
+        background-image: linear-gradient(to right, #ff7e5f, #feb47b); 
+        -webkit-background-clip: text; 
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent; 
+    }
+  }
+  
+  .animate .letter {
+    animation-play-state: running; 
+  }

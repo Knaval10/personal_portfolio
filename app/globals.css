@@ -19,3 +19,29 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.container{
+  @apply max-w-[1540px] mx-auto 
+}
+
+@keyframes textReveal {
+  0% {
+    width: 0;
+    
+  }
+  
+  100% {
+    width: 100%;
+    
+  }
+}
+
+.animate-text {
+  animation: textReveal 3s steps(30) forwards;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+
+

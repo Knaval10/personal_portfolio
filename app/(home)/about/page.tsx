@@ -3,35 +3,31 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import profilePic from "../../assets/image/NabalPP.jpg";
-
-// Define the shape of the data returned from the API
+import Header from "@/components/Header/page";
+import { SkillsType } from "../skills/page";
 interface AboutItem {
   id: number;
   content: string;
 }
-const skillSet = [
-  {
-    id: 1,
-    title: "JavaScript",
-  },
-  {
-    id: 2,
-    title: "React.Js",
-  },
-  {
-    id: 3,
-    title: "Next.Js",
-  },
-  {
-    id: 4,
-    title: "Redux",
-  },
-];
-const About = () => {
-  const [aboutData, setAboutData] = useState<AboutItem[]>([]);
+
+const About: React.FC = () => {
+  const [aboutData, setAboutData] = useState<AboutItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [skills, setSkills] = useState<SkillsType[] | []>([]);
+  useEffect(() => {
+    const fetchSkillsData = async () => {
+      try {
+        const response = await fetch("/api/update-skills");
+        const data = await response.json();
+        setSkills(data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchSkillsData();
+  }, []);
+  const featuredSkills = (skills?.length > 0 && skills.slice(0, 4)) || [];
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
@@ -40,7 +36,7 @@ const About = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data: AboutItem[] = await response.json();
+        const data: AboutItem = await response.json();
         setAboutData(data);
       } catch (err: unknown) {
         const errorMessage =
@@ -58,30 +54,44 @@ const About = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="flex justify-center items-center gap-10 px-5 py-10 ">
-      <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
-        <Image
-          src={profilePic}
-          alt={"profile-picture"}
-          className="h-full w-full rounded-bl-[100px]"
-          loading="lazy"
-        />
-      </figure>
-      <div className="w-1/2 flex flex-col justify-center gap-2 h-full">
-        <h2 className="text-3xl font-bold">About Me</h2>
-        {aboutData.length > 0 ? (
-          aboutData.map((item) => <p key={item.id}>{item.content}</p>)
-        ) : (
-          <p>No about information available.</p>
-        )}
-        {skillSet.length > 0
-          ? skillSet.map((item, idx) => (
-              <div key={idx} className="">
-                {item.title}
-              </div>
-            ))
-          : ""}
-      </div>
+    <main className="flex flex-col gap-10 p-5 container">
+      <Header
+        title={"About Me"}
+        description={
+          "Discover who I am, what drives me, and the journey I’ve taken to become a passionate frontend developer."
+        }
+      />
+      <section className="flex flex-col md:flex-row justify-center items-center gap-10 ">
+        <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
+          <Image
+            src={profilePic}
+            alt={"profile-picture"}
+            className="h-full w-full rounded-bl-[100px]"
+            loading="lazy"
+          />
+        </figure>
+        <div className="md:w-1/2 flex flex-col justify-center gap-4 h-full">
+          {aboutData ? (
+            <p>{aboutData?.content}</p>
+          ) : (
+            <p>No about information available.</p>
+          )}
+          <div className="flex flex-col justify-center  gap-4 container p-5">
+            {featuredSkills?.length > 0 &&
+              featuredSkills.map((skill, idx: number) => (
+                <article key={idx} className="flex items-center gap-5">
+                  <h2 className="w-1/4">{skill.skill}</h2>
+                  <div className="h-2 bg-white w-3/4 rounded-lg">
+                    <div
+                      className="bg-gradient-to-r from-red-500 to-orange-300 h-full rounded-lg"
+                      style={{ width: skill.proficiency }}
+                    />
+                  </div>
+                </article>
+              ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 };

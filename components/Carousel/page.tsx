@@ -1,12 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ProjectCard from "../Card/ProjectCard";
 
-const Carousel = ({ carouselData }: any) => {
+const Carousel = ({ children }: { children: React.ReactNode }) => {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -15,7 +23,7 @@ const Carousel = ({ carouselData }: any) => {
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
-    centerMode: true,
+    centerMode: width <= 1024 ? true : false,
     centerPadding: "10%",
     responsive: [
       {
@@ -47,18 +55,7 @@ const Carousel = ({ carouselData }: any) => {
 
   return (
     <div className="mx-auto w-full max-w-4xls p-4">
-      <Slider {...settings}>
-        {carouselData?.length > 0 &&
-          carouselData.map((item: any, idx: number) => (
-            <div key={idx} className="p-2">
-              <ProjectCard
-                title={item.title}
-                thumbnail={item.thumbnail}
-                link={item.link}
-              />
-            </div>
-          ))}
-      </Slider>
+      <Slider {...settings}>{children}</Slider>
     </div>
   );
 };
