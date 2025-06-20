@@ -11,7 +11,6 @@ import ProjectCard, { ProjectProps } from "@/components/Card/ProjectCard";
 import ColorChangingTextCSS from "@/components/Animation/ColorChangingTextCSS";
 import fbIcon from "../assets/icons/Facebook.svg";
 import ldIcon from "../assets/icons/Linkedin.svg";
-import igIcon from "../assets/icons/Instagram.svg";
 import ghIcon from "../assets/icons/Github.svg";
 import Link from "next/link";
 import Header from "@/components/Header/page";
