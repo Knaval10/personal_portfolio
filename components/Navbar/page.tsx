@@ -112,6 +112,7 @@ const Navbar = () => {
             return (
               <li
                 key={index}
+                onClick={() => setIsOpen(false)}
                 className={`absolute transition-all duration-500 ease-out`}
                 style={{
                   transform: isOpen

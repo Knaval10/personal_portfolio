@@ -104,6 +104,17 @@ const Home = () => {
     };
     fetchFileData();
   }, []);
+  useEffect(() => {
+    if (selectedTestimony > 0) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedTestimony]);
+
   const featuredProjects: ProjectProps[] =
     (projects?.length > 0 && projects.slice(0, 4)) || [];
   return (
@@ -239,7 +250,10 @@ const Home = () => {
           {testimonies?.length > 0 && (
             <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-1/2 md:w-1/2 p-2 sm:p-5 md:p-10 relative">
               <section
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setSelectedTestimony(0);
+                }}
                 className="absolute top-3 right-5 text-white hover:text-gray-700 hover:bg-white border border-white p-1 cursor-pointer rounded-lg "
               >
                 <CrossIcon className="w-4 h-4" />

@@ -61,7 +61,7 @@ const About: React.FC = () => {
           "Discover who I am, what drives me, and the journey I’ve taken to become a passionate frontend developer."
         }
       />
-      <section className="flex flex-col md:flex-row justify-center items-center gap-10 ">
+      <section className="flex flex-col md:flex-row justify-center items-center gap-10 text-white">
         <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
           <Image
             src={profilePic}
@@ -72,7 +72,7 @@ const About: React.FC = () => {
         </figure>
         <div className="md:w-1/2 flex flex-col justify-center gap-4 h-full">
           {aboutData ? (
-            <p>{aboutData?.content}</p>
+            <p className="text-white">{aboutData?.content}</p>
           ) : (
             <p>No about information available.</p>
           )}
