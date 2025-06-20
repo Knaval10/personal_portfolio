@@ -54,7 +54,7 @@ const About: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="flex flex-col gap-10 p-5 container">
+    <main className="flex flex-col gap-10 p-5 container z-[5]">
       <Header
         title={"About Me"}
         description={
@@ -83,7 +83,7 @@ const About: React.FC = () => {
                   <h2 className="w-1/4">{skill.skill}</h2>
                   <div className="h-2 bg-white w-3/4 rounded-lg">
                     <div
-                      className="bg-gradient-to-r from-red-500 to-orange-300 h-full rounded-lg"
+                      className="bg-gradient-to-r from-[#C961DE] to-[#2954A3] h-full rounded-lg"
                       style={{ width: skill.proficiency }}
                     />
                   </div>

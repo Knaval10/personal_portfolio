@@ -10,11 +10,19 @@ import Carousel from "@/components/Carousel/page";
 import ProjectCard, { ProjectProps } from "@/components/Card/ProjectCard";
 import ColorChangingTextCSS from "@/components/Animation/ColorChangingTextCSS";
 import fbIcon from "../assets/icons/Facebook.svg";
-import ldIcon from "../assets/icons/LinkedIn.svg";
+import ldIcon from "../assets/icons/Linkedin.svg";
 import igIcon from "../assets/icons/Instagram.svg";
 import Link from "next/link";
 import Header from "@/components/Header/page";
-import TestimonyCard from "@/components/Card/TestimonyCard";
+import TestimonyCard, { ItemType } from "@/components/Card/TestimonyCard";
+import Galaxy from "../assets/image/Galaxy.png";
+import Diamond from "../assets/image/Diamond.png";
+import planets from "../assets/image/Planets.png";
+import Kohinoor from "../assets/image/Kohinoor.png";
+import TestimonyPopup from "@/components/Modal/TestimonyPopup";
+import LeftArrow from "../assets/dynamic/LeftArrow";
+import RightArrow from "../assets/dynamic/RightArrow";
+import CrossIcon from "../assets/dynamic/CrossIcon";
 
 const socialMedia = [
   {
@@ -37,7 +45,19 @@ const socialMedia = [
 const Home = () => {
   const [showSocial, setShowSocial] = useState(false);
   const [projects, setProjects] = useState<ProjectProps[] | []>([]);
-  const [testimonies, setTestimonies] = useState([]);
+  const [testimonies, setTestimonies] = useState<ItemType[]>([]);
+  const [selectedTestimony, setSelectedTestimony] = useState<number>(0);
+  const [showModal, setShowModal] = useState(false);
+  const [animationDirection, setAnimationDirection] = useState<
+    "left" | "right"
+  >("right");
+
+  const handleModal = (id: number) => {
+    setShowModal((prev) => !prev);
+    setSelectedTestimony(id);
+    scrollTo(0, 0);
+  };
+  console.log("selected", selectedTestimony);
   useEffect(() => {
     const fetchProjectsData = async () => {
       try {
@@ -62,11 +82,10 @@ const Home = () => {
     };
     fetchTestimonyData();
   }, []);
-  console.log("test", testimonies);
   const featuredProjects: ProjectProps[] =
     (projects?.length > 0 && projects.slice(0, 4)) || [];
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col gap-8 -mt-[97px]">
       <section
         className="relative h-[800px] bg-cover bg-center w-full before:absolute before:bg-gray-500 before:bg-opacity-60 before:inset-0"
         style={{
@@ -75,7 +94,7 @@ const Home = () => {
       >
         <div className="container">
           <div className="flex flex-col justify-center items-center gap-10 absolute inset-0 ">
-            <p className="animate-text text-4xl font-bold text-center">
+            <p className="animate-text text-2xl font-bold text-center">
               Welcome to my site
             </p>
             <article className="flex flex-col items-center gap-4 text-white text-center">
@@ -88,7 +107,7 @@ const Home = () => {
                 />
               </figure>
               <div className="flex flex-col justify-center gap-2">
-                <h1 className="text-4xl font-bold pt-4">Nabal Khadka</h1>
+                <h1 className="text-3xl font-bold pt-4">Nabal Khadka</h1>
                 <p className="text-3xl font-bold">
                   <ColorChangingTextCSS text="Frontend Developer" />
                 </p>
@@ -96,16 +115,18 @@ const Home = () => {
             </article>
           </div>
           <article className="flex justify-end gap-4 absolute bottom-5 right-5 md:right-10 w-full whitespace-nowrap">
-            <button className="self-end hover:bg-[#FF6300] bg-[#ff7f30] px-3 py-2 text-xl font-medium rounded-lg h-fit">
-              <a href="">Download CV</a>
+            <button className="self-end hover:bg-gradient-to-r hover:to-[#C961DE] hover:from-[#2954A3] bg-gradient-to-r from-[#C961DE] to-[#2954A3]  px-3 py-2 rounded-lg h-fit">
+              <a href="" className="text-sm text-white font-semibold">
+                Download CV
+              </a>
             </button>
             <div
               onMouseEnter={() => setShowSocial(true)}
               onMouseLeave={() => setShowSocial(false)}
-              className="relative overflow-hidden"
+              className="relative overflow-hidden z-[5]"
             >
               <div
-                className={`rounded-md p-2 shadow-lg flex flex-col gap-2 transition-transform duration-500 ${
+                className={`rounded-md p-2 shadow-lg flex flex-col gap-2 transition-transform duration-500  ${
                   showSocial
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-full"
@@ -113,22 +134,32 @@ const Home = () => {
               >
                 {socialMedia.map((item) => (
                   <Link key={item.id} href={item.link} target="_blank">
-                    <Image src={item.icon} alt="social media" />
+                    <Image
+                      src={item.icon}
+                      alt="social media"
+                      className="w-8 h-8"
+                    />
                   </Link>
                 ))}
               </div>
 
-              <button className=" border z-10 hover:border-[#FF6300] border-[#ff7f30] px-3 py-2 text-xl font-medium rounded-lg relative">
+              <button className="text-sm text-white font-semibold border z-10 border-[#C961DE] hover:border-[#2954A3] px-3 py-2 rounded-lg relative">
                 Follow me
               </button>
             </div>
           </article>
         </div>
       </section>
-      <section className="flex">
+      <section className="flex relative">
         <About />
+        <div className="absolute -left-10 -top-10 w-[30%] md:full">
+          <Image src={Kohinoor} alt={""} />
+        </div>
+        <div className="absolute right-2 -bottom-20 lg:-bottom-40 ">
+          <Image src={Galaxy} alt={""} />
+        </div>
       </section>
-      <section className="flex flex-col gap-5 bg-[#2A3A4A] bg-opacity-40 p-5">
+      <section className="flex flex-col gap-5  p-5 relative z-[5] ">
         <Header
           title={"Featured Projects"}
           description={"View the best projects from my shelf"}
@@ -147,27 +178,82 @@ const Home = () => {
               </div>
             ))}
         </Carousel>
+        <div className="absolute -bottom-20 lg:-bottom-1/3 -left-[18%] 2xl:-left-[10%] lg:w-[60%]">
+          <Image src={Diamond} alt={""} />
+        </div>
       </section>
-      <section className="flex flex-col gap-5 bg-[#1A2238] bg-opacity-40 p-5">
+      <section className="flex flex-col gap-5 p-5 z-[5] relative">
         <Header
           title={"Testimonials"}
           description={
             "Discover what my seniors and stakeholders have to say about me."
           }
         />
-
         <Carousel>
           {testimonies?.length > 0 &&
             testimonies.map((item, idx: number) => (
               <div key={idx} className="p-2 w-full">
-                <TestimonyCard item={item} />
+                <TestimonyCard
+                  item={item}
+                  handleClick={() => handleModal(item?.id)}
+                />
               </div>
             ))}
         </Carousel>
+        <div className="absolute -bottom-1/4 right-0 ">
+          <Image src={planets} alt={"planets"} />
+        </div>
       </section>
       <section id="contact">
         <Contact />
       </section>
+      {showModal ? (
+        <div className="flex items-center z-[100] absolute inset-0 top-0 backdrop-blur-3xl ">
+          {testimonies?.length > 0 && (
+            <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-1/2 md:w-1/2 p-2 sm:p-5 md:p-10 relative">
+              <section
+                onClick={() => setShowModal(false)}
+                className="absolute top-3 right-5 text-white hover:text-gray-700 hover:bg-white border border-white p-1 cursor-pointer rounded-lg "
+              >
+                <CrossIcon className="w-4 h-4" />
+              </section>
+              <button
+                onClick={() => {
+                  setSelectedTestimony(selectedTestimony - 1);
+                  setAnimationDirection("left");
+                }}
+                disabled={selectedTestimony === 1}
+                className="disabled:cursor-not-allowed hover:text-[#0065F2] text-white disabled:hover:text-gray-400 "
+              >
+                <LeftArrow />
+              </button>
+              <div className="overflow-hidden w-full flex justify-center items-center">
+                <div
+                  key={selectedTestimony}
+                  className={`${
+                    animationDirection === "right"
+                      ? "animate-slide-right"
+                      : "animate-slide-left"
+                  }`}
+                >
+                  <TestimonyPopup item={testimonies[selectedTestimony - 1]} />
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setSelectedTestimony(selectedTestimony + 1);
+                  setAnimationDirection("right");
+                }}
+                disabled={selectedTestimony === testimonies?.length}
+                className="disabled:cursor-not-allowed hover:text-[#0065F2] text-white disabled:hover:text-gray-400"
+              >
+                <RightArrow />
+              </button>
+            </div>
+          )}
+        </div>
+      ) : null}
     </main>
   );
 };

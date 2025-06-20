@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
-
+import Phone from "../../assets/icons/Phone.svg";
+import Email from "../../assets/icons/Email.svg";
+import Image from "next/image";
 interface FormData {
   name: string;
   email: string;
@@ -73,54 +75,78 @@ const Contact: React.FC = () => {
     <main className="  bg-[#2F2F8A] bg-opacity-40">
       <div className="flex flex-col md:flex-row gap-10  w-full rounded-xl container p-5">
         <section className="md:w-1/2 flex flex-col gap-5 text-white ">
-          <h2 className="text-2xl font-bold">Get in touch</h2>
-          <p className="text-xl font-medium leading-[28px]">
+          <h2 className="text-xl font-bold">Get in touch</h2>
+          <p className="text-base font-medium leading-[24px]">
             I am very approachable and would love to speak to you. Feel free to
             call, send me an email. Follow mw in social media or simply complete
             the enquiry form.
           </p>
           <div className="flex flex-col gap-2 pt-5 text-white font-medium">
-            <a href="tel:+977 9811312998">+977 9811312998</a>
-            <a href="mailTo:nabal.khadka7@gmail.com">nabal.khadka7@gmail.com</a>
+            <a
+              className="flex gap-1 hover:underline text-sm w-fit"
+              href="tel:+977 9811312998"
+            >
+              <Image
+                src={Phone}
+                alt={"phone"}
+                width={10}
+                height={20}
+                className="w-3"
+              />
+              +977 9811312998
+            </a>
+            <a
+              className="flex gap-1 hover:underline text-sm w-fit"
+              href="mailTo:nabal.khadka7@gmail.com"
+            >
+              <Image
+                src={Email}
+                alt={"email"}
+                width={10}
+                height={20}
+                className="w-3"
+              />
+              nabal.khadka7@gmail.com
+            </a>
           </div>
         </section>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:w-1/2">
-          <h2 className="text-2xl font-bold text-white">Send me messages</h2>
-          <article className="flex flex-col gap-2">
+          <h2 className="text-xl font-bold text-white">Send me messages</h2>
+          <article className="flex flex-col gap-2 text-white text-sm ">
             <span>Name</span>
             <input
               type="text"
               name="name"
               value={data.name}
               onChange={handleInputChange}
-              className="text-black p-2 rounded-lg bg-white bg-opacity-30"
+              className="text-white p-2 rounded-lg bg-white bg-opacity-30"
             />
             {error.name && (
               <span className="text-red-500 text-sm">{error.name}</span>
             )}
           </article>
 
-          <article className="flex flex-col gap-2">
+          <article className="flex flex-col gap-2 text-white text-sm ">
             <span>Email</span>
             <input
               type="text"
               name="email"
               value={data.email}
               onChange={handleInputChange}
-              className="text-black p-2 rounded-lg bg-white bg-opacity-30"
+              className="text-white p-2 rounded-lg bg-white bg-opacity-30"
             />
             {error.email && (
               <span className="text-red-500 text-sm">{error.email}</span>
             )}
           </article>
 
-          <article className="flex flex-col gap-2">
+          <article className="flex flex-col gap-2 text-white text-sm">
             <span>Message</span>
             <textarea
               name="message"
               value={data.message}
               onChange={handleInputChange}
-              className="text-black p-2 rounded-lg bg-white bg-opacity-30"
+              className="text-white p-2 rounded-lg bg-white bg-opacity-30"
             />
             {error.message && (
               <span className="text-red-500 text-sm">{error.message}</span>
@@ -129,7 +155,7 @@ const Contact: React.FC = () => {
 
           <button
             type="submit"
-            className="py-2 px-4 bg-gradient-to-r from-[#C961DE] to-[#2954A3] w-fit rounded-lg text-white"
+            className="py-2 px-4 bg-gradient-to-r from-[#C961DE] to-[#2954A3] hover:bg-gradient-to-r hover:to-[#C961DE] hover:from-[#2954A3] w-fit rounded-lg text-white text-sm font-semibold"
           >
             Submit
           </button>

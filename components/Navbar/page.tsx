@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import logo from "../../app/assets/icons/N.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 const navData = [
   {
     id: 1,
@@ -38,6 +39,7 @@ const navData = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -46,7 +48,7 @@ const Navbar = () => {
   return (
     <>
       {/*Larger screens' navbar */}
-      <div className="flex items-center justify-between w-full p-5 bg-transparent sticky top-0 z-10 backdrop-blur-xl ">
+      <div className="flex items-center justify-between w-full p-5 bg-transparent fixed top-0 z-10 backdrop-blur-2xl ">
         <div className="">
           <Link href="/">
             <Image src={logo} alt={"Nabal"} />
@@ -54,7 +56,15 @@ const Navbar = () => {
         </div>
         <div className="hidden md:flex items-center gap-4">
           {navData?.map((nav) => (
-            <Link key={nav?.id} href={nav?.link}>
+            <Link
+              key={nav?.id}
+              href={nav?.link}
+              className={`p-2 ${
+                pathname === nav?.link
+                  ? "font-semibold border-b border-white"
+                  : ""
+              }`}
+            >
               {nav?.title}
             </Link>
           ))}

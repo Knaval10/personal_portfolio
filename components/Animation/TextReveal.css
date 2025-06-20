@@ -13,7 +13,7 @@
       color: white; 
     }
     to {
-        background-image: linear-gradient(to right, #ff7e5f, #feb47b); 
+        background-image: linear-gradient(to right, #140125, #2c1863); 
         -webkit-background-clip: text; 
         background-clip: text;
         -webkit-text-fill-color: transparent;
