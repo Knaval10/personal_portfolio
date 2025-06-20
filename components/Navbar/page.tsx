@@ -59,10 +59,10 @@ const Navbar = () => {
             <Link
               key={nav?.id}
               href={nav?.link}
-              className={`p-2 ${
+              className={`p-2 font-semibold border-b-2 ${
                 pathname === nav?.link
-                  ? "font-semibold border-b border-white"
-                  : ""
+                  ? "border-white text-white"
+                  : "border-transparent text-gray-200 hover:border-white hover:text-white"
               }`}
             >
               {nav?.title}

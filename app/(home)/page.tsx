@@ -12,6 +12,7 @@ import ColorChangingTextCSS from "@/components/Animation/ColorChangingTextCSS";
 import fbIcon from "../assets/icons/Facebook.svg";
 import ldIcon from "../assets/icons/Linkedin.svg";
 import igIcon from "../assets/icons/Instagram.svg";
+import ghIcon from "../assets/icons/Github.svg";
 import Link from "next/link";
 import Header from "@/components/Header/page";
 import TestimonyCard, { ItemType } from "@/components/Card/TestimonyCard";
@@ -27,25 +28,36 @@ import CrossIcon from "../assets/dynamic/CrossIcon";
 const socialMedia = [
   {
     id: 1,
-    link: "https://facebook.com",
-    icon: fbIcon,
+    link: "https://www.linkedin.com/in/nabal-khadka-4b6b96238/",
+    icon: ldIcon,
   },
+  // {
+  //   id: 3,
+  //   link: "https://facebook.com",
+  //   icon: igIcon,
+  // },
   {
     id: 2,
-    link: "https://facebook.com",
-    icon: ldIcon,
+    link: "https://github.com/Knaval10",
+    icon: ghIcon,
   },
   {
     id: 3,
-    link: "https://facebook.com",
-    icon: igIcon,
+    link: "https://www.facebook.com/nabal.khadka.94",
+    icon: fbIcon,
   },
 ];
+
+interface FileType {
+  filename: string;
+  url: string;
+}
 
 const Home = () => {
   const [showSocial, setShowSocial] = useState(false);
   const [projects, setProjects] = useState<ProjectProps[] | []>([]);
   const [testimonies, setTestimonies] = useState<ItemType[]>([]);
+  const [file, setFile] = useState<FileType>();
   const [selectedTestimony, setSelectedTestimony] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
   const [animationDirection, setAnimationDirection] = useState<
@@ -57,7 +69,6 @@ const Home = () => {
     setSelectedTestimony(id);
     scrollTo(0, 0);
   };
-  console.log("selected", selectedTestimony);
   useEffect(() => {
     const fetchProjectsData = async () => {
       try {
@@ -81,6 +92,18 @@ const Home = () => {
       }
     };
     fetchTestimonyData();
+  }, []);
+  useEffect(() => {
+    const fetchFileData = async () => {
+      try {
+        const response = await fetch("/api/update-document");
+        const data: FileType = await response.json();
+        setFile(data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchFileData();
   }, []);
   const featuredProjects: ProjectProps[] =
     (projects?.length > 0 && projects.slice(0, 4)) || [];
@@ -116,7 +139,12 @@ const Home = () => {
           </div>
           <article className="flex justify-end gap-4 absolute bottom-5 right-5 md:right-10 w-full whitespace-nowrap">
             <button className="self-end hover:bg-gradient-to-r hover:to-[#C961DE] hover:from-[#2954A3] bg-gradient-to-r from-[#C961DE] to-[#2954A3]  px-3 py-2 rounded-lg h-fit">
-              <a href="" className="text-sm text-white font-semibold">
+              <a
+                download={file?.filename}
+                href={file?.url}
+                target="_blank"
+                className="text-sm text-white font-semibold"
+              >
                 Download CV
               </a>
             </button>
