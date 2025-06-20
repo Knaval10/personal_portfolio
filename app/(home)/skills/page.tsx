@@ -28,7 +28,7 @@ const Skills = () => {
           "A comprehensive overview of the technical skills and tools I’ve mastered to build efficient and scalable frontend applications."
         }
       />
-      <div className="flex flex-col justify-center  gap-4 container p-5">
+      <div className="flex flex-col justify-center  gap-4 container p-5 text-white">
         {skills.length > 0 &&
           skills.map((skill, idx: number) => (
             <article key={idx} className="flex items-center gap-5">
