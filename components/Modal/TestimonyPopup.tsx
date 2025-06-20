@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import LeftArrow from "@/app/assets/dynamic/LeftArrow";
 interface ItemType {
   image: string;
   name: string;
