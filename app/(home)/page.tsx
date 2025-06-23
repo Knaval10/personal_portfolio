@@ -25,6 +25,7 @@ import RightArrow from "../assets/dynamic/RightArrow";
 import CrossIcon from "../assets/dynamic/CrossIcon";
 import Services from "@/components/Services/Services";
 import Ellipse from "../../app/assets/icons/Ellipse.svg";
+import DownArrow from "../../app/assets/icons/ArrowDown.svg";
 
 const socialMedia = [
   {
@@ -106,6 +107,7 @@ const Home = () => {
     };
     fetchFileData();
   }, []);
+
   useEffect(() => {
     if (selectedTestimony > 0) {
       document.body.style.overflow = "hidden";
@@ -128,7 +130,7 @@ const Home = () => {
         }}
       >
         <div className="container">
-          <div className="flex flex-col justify-center items-center gap-10 absolute inset-0 ">
+          <div className="flex flex-col justify-center items-center gap-8 absolute inset-0 ">
             <p className="animate-text text-2xl font-bold text-center">
               Welcome to my site
             </p>
@@ -147,6 +149,20 @@ const Home = () => {
                   <ColorChangingTextCSS text="Frontend Developer" />
                 </p>
               </div>
+            </article>
+            <article className="flex flex-col md:hidden items-center text-center gap-3">
+              <h2 className="text-white text-sm font-semibold leading-4">
+                Want to know more? <br /> Scroll down
+              </h2>
+              <figure className="w-8 h-8 animate-bounce">
+                <Image
+                  src={DownArrow}
+                  alt={"scroll down"}
+                  width={100}
+                  height={100}
+                  className="w-full h-full"
+                />
+              </figure>
             </article>
           </div>
           <article className="flex justify-end gap-4 absolute bottom-5 right-5 md:right-10 w-full whitespace-nowrap">
@@ -187,7 +203,6 @@ const Home = () => {
                   </Link>
                 ))}
               </div>
-
               <button className="text-sm text-white font-semibold border z-10 border-[#C961DE] hover:border-[#2954A3] px-3 py-2 rounded-lg relative">
                 Follow me
               </button>
@@ -229,7 +244,7 @@ const Home = () => {
       </section>
       <section className="relative z-[5]">
         <Services />
-        <div className="block xl:hidden absolute top-28 min-[480px]:top-16 sm:top-12">
+        <div className="block absolute top-28 inset-0 min-[480px]:top-16 sm:top-12">
           <Image
             src={Ellipse}
             alt={"ellipse"}

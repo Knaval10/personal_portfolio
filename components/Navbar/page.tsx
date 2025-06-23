@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../../app/assets/icons/N.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -40,7 +40,22 @@ const navData = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const navbarRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("");
+
+  useEffect(() => {
+    const handelOutsideClick = (e: MouseEvent) => {
+      if (
+        navbarRef?.current &&
+        !navbarRef?.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handelOutsideClick);
+    return () => document.removeEventListener("click", handelOutsideClick);
+  }, [isOpen]);
 
   const toggleMenu = () => {
     setIsOpen((prevState) => !prevState);
@@ -50,29 +65,44 @@ const Navbar = () => {
       {/*Larger screens' navbar */}
       <div className="flex items-center justify-between w-full p-5 bg-transparent fixed top-0 z-10 backdrop-blur-2xl ">
         <div className="">
-          <Link href="/">
+          <Link href="/" onClick={() => setActiveHash("")}>
             <Image src={logo} alt={"Nabal"} />
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          {navData?.map((nav) => (
-            <Link
-              key={nav?.id}
-              href={nav?.link}
-              className={`p-2 font-semibold border-b-2 ${
-                pathname === nav?.link
-                  ? "border-white text-white"
-                  : "border-transparent text-gray-200 hover:border-white hover:text-white"
-              }`}
-            >
-              {nav?.title}
-            </Link>
-          ))}
+          {navData?.map((nav) => {
+            const isContact = nav.title === "Contact Me";
+
+            if (isContact && pathname !== "/") return null;
+
+            return (
+              <Link
+                key={nav?.id}
+                href={nav?.link}
+                onClick={() => {
+                  if (isContact) setActiveHash("#contact");
+                }}
+                className={`p-2 font-semibold border-b-2 ${
+                  pathname === nav?.link ||
+                  (pathname === "/" &&
+                    nav?.link === "/#contact" &&
+                    activeHash === "#contact")
+                    ? "border-white text-white"
+                    : "border-transparent text-gray-200 hover:border-white hover:text-white"
+                }`}
+              >
+                {nav?.title}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
       {/*Smaller screens' navbar */}
-      <div className="fixed top-0 right-0 w-32 h-32 md:hidden flex items-center z-50 p-5">
+      <div
+        ref={navbarRef}
+        className="fixed top-0 right-0 w-32 h-32 md:hidden flex items-center z-50 p-5"
+      >
         <button
           onClick={toggleMenu}
           className={`w-14 h-14 border-4 border-teal-500 rounded-full text-white flex flex-col items-center justify-center shadow-lg text-3xl absolute right-5 z-20 ${
@@ -102,12 +132,20 @@ const Navbar = () => {
           }`}
         >
           {navData.map((item, index) => {
-            const angle = (-180 / (navData.length - 1)) * index - 90;
+            const isContact = item.title === "Contact Me";
+
+            const angle =
+              (-180 /
+                (pathname === "/" ? navData.length - 1 : navData.length - 2)) *
+                index -
+              90;
             // const angle = (360 / navData?.length) * index;
             const radius = 90;
 
             const x = radius * Math.cos((angle * Math.PI) / 180);
             const y = radius * Math.sin((angle * Math.PI) / 180);
+
+            if (isContact && pathname !== "/") return null;
 
             return (
               <li
