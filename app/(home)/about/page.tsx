@@ -8,6 +8,7 @@ import { SkillsType } from "../skills/page";
 interface AboutItem {
   id: number;
   content: string;
+  image: string;
 }
 
 const About: React.FC = () => {
@@ -58,14 +59,16 @@ const About: React.FC = () => {
       <Header
         title={"About Me"}
         description={
-          "Discover who I am, what drives me, and the journey I’ve taken to become a passionate frontend developer."
+          "Discover who I am, what drives me, and my top skills as a frontend developer."
         }
       />
       <section className="flex flex-col md:flex-row justify-center items-center gap-10 text-white">
         <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
           <Image
-            src={profilePic}
+            src={aboutData?.image ? aboutData?.image : profilePic}
             alt={"profile-picture"}
+            width={100}
+            height={100}
             className="h-full w-full rounded-bl-[100px]"
             loading="lazy"
           />

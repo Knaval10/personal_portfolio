@@ -16,7 +16,7 @@ const TestimonyCard = ({ item, handleClick }: TestimonyProps) => {
   const { image, name, designation, testimony } = item;
   return (
     <div onClick={handleClick} className="relative top-10 min-h-[280px]">
-      <figure className="absolute -top-10 right-5 z-10 bg-gradient-to-r from-red-500 to-[#d77a5c] p-1 rounded-full">
+      <figure className="absolute -top-8 sm:-top-12 right-5 z-10 bg-gradient-to-r from-red-500 to-[#d77a5c] p-1 rounded-full">
         <Image
           src={image}
           alt="profile image"

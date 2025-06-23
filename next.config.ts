@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "yilab.org.np",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cwolspzfaaiedmynzssx.supabase.co",
+        pathname: "/**",
+      },
     ],
   },
 };

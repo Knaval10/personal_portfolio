@@ -23,6 +23,8 @@ import TestimonyPopup from "@/components/Modal/TestimonyPopup";
 import LeftArrow from "../assets/dynamic/LeftArrow";
 import RightArrow from "../assets/dynamic/RightArrow";
 import CrossIcon from "../assets/dynamic/CrossIcon";
+import Services from "@/components/Services/Services";
+import Ellipse from "../../app/assets/icons/Ellipse.svg";
 
 const socialMedia = [
   {
@@ -161,17 +163,22 @@ const Home = () => {
             <div
               onMouseEnter={() => setShowSocial(true)}
               onMouseLeave={() => setShowSocial(false)}
-              className="relative overflow-hidden z-[5]"
+              className="relative overflow-hidden z-[5] "
             >
               <div
-                className={`rounded-md p-2 shadow-lg flex flex-col gap-2 transition-transform duration-500  ${
+                className={`bg-[#0F103F] rounded-md p-2 shadow-lg flex flex-col items-center gap-2 transition-transform duration-500 border border-white  ${
                   showSocial
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-full"
                 }`}
               >
                 {socialMedia.map((item) => (
-                  <Link key={item.id} href={item.link} target="_blank">
+                  <Link
+                    key={item.id}
+                    href={item.link}
+                    target="_blank"
+                    className="border border-white rounded-full"
+                  >
                     <Image
                       src={item.icon}
                       alt="social media"
@@ -220,6 +227,18 @@ const Home = () => {
           <Image src={Diamond} alt={""} />
         </div>
       </section>
+      <section className="relative z-[5]">
+        <Services />
+        <div className="block xl:hidden absolute top-28 min-[480px]:top-16 sm:top-12">
+          <Image
+            src={Ellipse}
+            alt={"ellipse"}
+            width={100}
+            height={100}
+            className="w-full h-full"
+          />
+        </div>
+      </section>
       <section className="flex flex-col gap-5 p-5 z-[5] relative">
         <Header
           title={"Testimonials"}
@@ -242,13 +261,13 @@ const Home = () => {
           <Image src={planets} alt={"planets"} />
         </div>
       </section>
-      <section id="contact">
+      <section id="contact" className="z-[5]">
         <Contact />
       </section>
       {showModal ? (
         <div className="flex items-center z-[100] absolute inset-0 top-0 backdrop-blur-3xl ">
           {testimonies?.length > 0 && (
-            <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-1/2 md:w-1/2 p-2 sm:p-5 md:p-10 relative">
+            <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-[70vh] md:w-1/2 p-2 sm:p-5 md:p-10 relative">
               <section
                 onClick={() => {
                   setShowModal(false);

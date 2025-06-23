@@ -1,6 +1,7 @@
-import Link from "next/link";
 import React from "react";
-
+import Link from "next/link";
+import visit from "../../app/assets/icons/Visit.svg";
+import Image from "next/image";
 export interface ProjectProps {
   title: string;
   thumbnail: string;
@@ -36,6 +37,16 @@ const ProjectCard = ({
                   {stack}
                 </p>
               ))}
+            <button className="flex gap-2 rounded-lg text-white text-sm font-semibold px-3 py-2 hover:bg-gradient-to-r hover:to-[#C961DE] hover:from-[#2954A3] bg-gradient-to-r from-[#C961DE] to-[#2954A3]">
+              <span>Visit Site</span>
+              <Image
+                src={visit}
+                alt={"visit icon"}
+                width={100}
+                height={100}
+                className="w-5 h-5"
+              />
+            </button>
           </div>
         </article>
         <h2 className="hidden md:block md:group-hover:hidden absolute bottom-0 bg-black bg-opacity-60 text-white font-semibold text-xl p-3 w-full text-center rounded-b-xl">

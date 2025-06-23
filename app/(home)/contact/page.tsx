@@ -90,13 +90,13 @@ const Contact: React.FC = () => {
     }, 5000);
   }, [showToast]);
   return (
-    <main className="  bg-[#2F2F8A] bg-opacity-40">
+    <main className="  bg-[#2F2F8A] bg-opacity-40 ">
       <div className="flex flex-col md:flex-row gap-10  w-full rounded-xl container p-5">
         <section className="md:w-1/2 flex flex-col gap-5 text-white ">
           <h2 className="text-xl font-bold">Get in touch</h2>
           <p className="text-base font-medium leading-[24px]">
             I am very approachable and would love to speak to you. Feel free to
-            call, send me an email. Follow mw in social media or simply complete
+            call, send me an email. Follow me in social media or simply complete
             the enquiry form.
           </p>
           <div className="flex flex-col gap-2 pt-5 text-white font-medium">

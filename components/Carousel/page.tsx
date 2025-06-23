@@ -22,7 +22,6 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
     autoplay: false,
     centerMode: true,
     centerPadding: "10%",
-    beforeChange: (_: number, next: number) => setCurrentSlide(next),
     responsive: [
       {
         breakpoint: 1280,
@@ -48,6 +47,17 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
     ],
   };
 
+  const handleNext = () => {
+    if (currentSlide < totalSlides - 1) {
+      setCurrentSlide(currentSlide + 1);
+    } else setCurrentSlide(0);
+  };
+  const handlePrev = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    } else setCurrentSlide(totalSlides - 1);
+  };
+
   return (
     <div className="mx-autos w-full max-w-4xls p-4 z-[5] flex flex-col gap-4">
       <Slider ref={sliderRef} {...settings}>
@@ -57,7 +67,10 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
       {/* Prev - Dots - Next */}
       <div className="flex justify-center items-center gap-4 mt-2">
         <button
-          onClick={() => sliderRef?.current?.slickPrev()}
+          onClick={() => {
+            sliderRef?.current?.slickPrev();
+            handlePrev();
+          }}
           className="text-gray-400 hover:text-[#0065F2]"
         >
           <LeftArrow />
@@ -76,9 +89,11 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
             />
           ))}
         </div>
-
         <button
-          onClick={() => sliderRef?.current?.slickNext()}
+          onClick={() => {
+            sliderRef?.current?.slickNext();
+            handleNext();
+          }}
           className="text-gray-400 hover:text-[#0065F2]"
         >
           <RightArrow />

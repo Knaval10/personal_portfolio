@@ -12,23 +12,23 @@ interface TestimonyProps {
 const TestimonyPopup = ({ item }: TestimonyProps) => {
   const { image, name, designation, testimony } = item;
   return (
-    <div className="relative">
-      <figure className="absolute top-2 right-2 z-10 p-1 rounded-full">
+    <div className="bg-white rounded-xl flex flex-col items-center gap-5 p-5">
+      <figure className="w-40 h-40 ">
         <Image
           src={image}
           alt="profile image"
           width={100}
           height={100}
-          className="rounded-full w-24 h-24 "
+          className="w-full h-full rounded-full object-cover "
         />
       </figure>
-      <section className="flex flex-col gap-2 p-5 pt-10 bg-white text-black rounded-xl h-[350px]">
-        <div className="flex flex-col">
+      <section className="flex flex-col items-center gap-5  text-black rounded-xl ">
+        <div className="flex flex-col items-center">
           <h2 className="text-xl text-[#d77a5c] font-bold">{name}</h2>
-          <h3 className="text-black font-semibold">{designation}</h3>
+          <h3 className="text-black font-semibold pb-2">{designation}</h3>
+          <div className="flex-grows h-0.5 bg-gradient-to-r from-red-400 to-green-400 w-full" />
         </div>
-        <div className="flex-grows h-0.5 bg-gradient-to-r from-red-400 to-green-400 w-[60%]"></div>
-        <p className="text-black">{testimony}</p>
+        <p className="text-black text-justify">{testimony}</p>
       </section>
     </div>
   );
