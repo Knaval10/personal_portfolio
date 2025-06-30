@@ -35,7 +35,7 @@ const Skills = () => {
               <h2 className="w-1/4">{skill.skill}</h2>
               <div className="h-2 bg-white w-3/4 rounded-lg">
                 <div
-                  className="bg-gradient-to-r from-[#C961DE] to-[#2954A3] h-full rounded-lg"
+                  className="animate-bg h-full rounded-lg"
                   style={{ width: skill.proficiency }}
                 />
               </div>
