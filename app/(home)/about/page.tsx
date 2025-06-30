@@ -63,13 +63,13 @@ const About: React.FC = () => {
         }
       />
       <section className="flex flex-col md:flex-row justify-center items-center gap-10 text-white">
-        <figure className="h-[300px] w-[300px] border-l-2 border-black rounded-bl-[100px]">
+        <figure className="h-[300px] w-[300px] md:self-start border-l-2 border-black rounded-bl-[100px]">
           <Image
             src={aboutData?.image ? aboutData?.image : profilePic}
             alt={"profile-picture"}
             width={100}
             height={100}
-            className="h-full w-full rounded-bl-[100px]"
+            className="h-full w-full rounded-bl-[100px] object-cover"
             loading="lazy"
           />
         </figure>
@@ -79,14 +79,17 @@ const About: React.FC = () => {
           ) : (
             <p>No about information available.</p>
           )}
-          <div className="flex flex-col justify-center  gap-4 container p-5">
+          <div className="flex flex-col justify-center gap-4 ">
             {featuredSkills?.length > 0 &&
               featuredSkills.map((skill, idx: number) => (
-                <article key={idx} className="flex items-center gap-5">
-                  <h2 className="w-1/4">{skill.skill}</h2>
-                  <div className="h-2 bg-white w-3/4 rounded-lg">
+                <article
+                  key={idx}
+                  className="flex flex-col min-[470px]:flex-row min-[470px]:items-center gap-2 min-[470px]:gap-5"
+                >
+                  <h2 className="min-[470px]:w-1/4">{skill.skill}</h2>
+                  <div className="h-2 bg-white min-[470px]:w-3/4 rounded-lg">
                     <div
-                      className="bg-gradient-to-r from-[#C961DE] to-[#2954A3] h-full rounded-lg"
+                      className="h-full rounded-lg animate-bg"
                       style={{ width: skill.proficiency }}
                     />
                   </div>

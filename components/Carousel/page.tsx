@@ -57,7 +57,6 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
       setCurrentSlide(currentSlide - 1);
     } else setCurrentSlide(totalSlides - 1);
   };
-
   return (
     <div className="mx-autos w-full max-w-4xls p-4 z-[5] flex flex-col gap-4">
       <Slider ref={sliderRef} {...settings}>
@@ -80,7 +79,10 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
           {Array.from({ length: totalSlides }).map((_, idx) => (
             <button
               key={idx}
-              onClick={() => sliderRef.current?.slickGoTo(idx)}
+              onClick={() => {
+                sliderRef.current?.slickGoTo(idx);
+                setCurrentSlide(idx);
+              }}
               className={`h-3 w-3 rounded-full transition-all ${
                 currentSlide === idx
                   ? "bg-[#140125] border-[1.8px] border-gray-400"
