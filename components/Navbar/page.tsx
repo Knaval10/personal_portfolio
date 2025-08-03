@@ -14,15 +14,15 @@ const navData = [
   },
   {
     id: 2,
-    link: "/qualification",
-    title: "Qualification",
-    icon: "🏅",
-  },
-  {
-    id: 3,
     link: "/skills",
     title: "Skills",
     icon: "🧠",
+  },
+  {
+    id: 3,
+    link: "/qualification",
+    title: "Qualification",
+    icon: "🏅",
   },
   {
     id: 4,

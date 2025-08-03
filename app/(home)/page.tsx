@@ -131,11 +131,8 @@ const Home = () => {
       >
         <div className="container">
           <div className="flex flex-col justify-center items-center gap-8 absolute inset-0 ">
-            <p className="animate-text text-2xl font-bold text-center">
-              Welcome to my site
-            </p>
-            <article className="flex flex-col items-center gap-4 text-white text-center">
-              <figure className="h-[300px] w-[300px] border-r-2 border-black rounded-full p-5">
+            <article className="flex flex-col items-center gap-1 text-white text-center">
+              <figure className="h-[300px] w-[300px] border-r-2 border-black rounded-full p-5 mb-3">
                 <Image
                   src={profilePic}
                   alt={"profile-picture"}
@@ -149,10 +146,13 @@ const Home = () => {
                   <ColorChangingTextCSS text="Frontend Developer" />
                 </p>
               </div>
+              <p className="animate-text text-base font-semibold italic text-[#200225]">
+                Bringing design to life through code.
+              </p>
             </article>
             <article className="flex flex-col md:hidden items-center text-center gap-3">
               <h2 className="text-white text-sm font-semibold leading-4">
-                Want to know more? <br /> Scroll down
+                Want to know more?
               </h2>
               <figure className="w-8 h-8 animate-bounce">
                 <Image
