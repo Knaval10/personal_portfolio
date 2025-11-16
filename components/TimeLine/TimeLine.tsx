@@ -1,6 +1,7 @@
 import React from "react";
 
 export interface QualificationType {
+  id: number;
   title: string;
   date: string;
   institute: string;

@@ -36,7 +36,10 @@ const Qualification: React.FC = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: QualificationType[] = await response.json();
-        setExpData(data);
+        const sortedData = data.sort(
+          (a: QualificationType, b: QualificationType) => a.id - b.id
+        );
+        setExpData(sortedData);
       } catch (err) {
         setError((err as Error).message);
       } finally {
