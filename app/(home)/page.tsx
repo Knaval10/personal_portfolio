@@ -207,6 +207,15 @@ const Home = () => {
               </div>
             ))}
         </Carousel>
+        <div className="flex justify-center mt-4">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg hover:shadow-cyan-500/30 hover:scale-105 transition-all duration-300 group"
+          >
+            <span>View All Projects</span>
+            <RightArrow className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
+        </div>
       </section>
 
       {/* ── Services / Tech Stack ── */}
