@@ -2,30 +2,27 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import profilePic from "../assets/image/NabalPP.jpg";
-import coverPic from "../assets/image/programming.jpg";
+import profilePic from "../assets/image/NabalPP.png";
 import About from "./about/page";
 import Contact from "./contact/page";
 import Carousel from "@/components/Carousel/page";
 import ProjectCard, { ProjectProps } from "@/components/Card/ProjectCard";
 import ColorChangingTextCSS from "@/components/Animation/ColorChangingTextCSS";
+import TechBackground from "@/components/Animation/TechBackground";
 import fbIcon from "../assets/icons/Facebook.svg";
 import ldIcon from "../assets/icons/Linkedin.svg";
 import ghIcon from "../assets/icons/Github.svg";
 import Link from "next/link";
 import Header from "@/components/Header/page";
 import TestimonyCard, { ItemType } from "@/components/Card/TestimonyCard";
-import Galaxy from "../assets/image/Galaxy.png";
-import Diamond from "../assets/image/Diamond.png";
-import planets from "../assets/image/Planets.png";
-import Kohinoor from "../assets/image/Kohinoor.png";
 import TestimonyPopup from "@/components/Modal/TestimonyPopup";
 import LeftArrow from "../assets/dynamic/LeftArrow";
 import RightArrow from "../assets/dynamic/RightArrow";
 import CrossIcon from "../assets/dynamic/CrossIcon";
 import Services from "@/components/Services/Services";
-import Ellipse from "../../app/assets/icons/Ellipse.svg";
 import DownArrow from "../../app/assets/icons/ArrowDown.svg";
+import { useFetch } from "@/app/lib/useFetch";
+import { DEV_PROJECTS, DEV_TESTIMONIALS, DEV_DOCUMENT } from "@/app/lib/devData";
 
 const socialMedia = [
   {
@@ -57,56 +54,20 @@ interface FileType {
 
 const Home = () => {
   const [showSocial, setShowSocial] = useState(false);
-  const [projects, setProjects] = useState<ProjectProps[] | []>([]);
-  const [testimonies, setTestimonies] = useState<ItemType[]>([]);
-  const [file, setFile] = useState<FileType>();
   const [selectedTestimony, setSelectedTestimony] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
-  const [animationDirection, setAnimationDirection] = useState<
-    "left" | "right"
-  >("right");
+  const [animationDirection, setAnimationDirection] = useState<"left" | "right">("right");
+
+  // Data fetching — uses dev fallbacks in development, real APIs in production
+  const { data: projects } = useFetch<ProjectProps[]>("/api/update-projects", DEV_PROJECTS);
+  const { data: testimonies } = useFetch<ItemType[]>("/api/update-testimonials", DEV_TESTIMONIALS);
+  const { data: file } = useFetch<FileType>("/api/update-document", DEV_DOCUMENT);
 
   const handleModal = (id: number) => {
     setShowModal((prev) => !prev);
     setSelectedTestimony(id);
     scrollTo(0, 0);
   };
-  useEffect(() => {
-    const fetchProjectsData = async () => {
-      try {
-        const response = await fetch("/api/update-projects");
-        const data: ProjectProps[] = await response.json();
-        setProjects(data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    fetchProjectsData();
-  }, []);
-  useEffect(() => {
-    const fetchTestimonyData = async () => {
-      try {
-        const response = await fetch("/api/update-testimonials");
-        const data = await response.json();
-        setTestimonies(data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    fetchTestimonyData();
-  }, []);
-  useEffect(() => {
-    const fetchFileData = async () => {
-      try {
-        const response = await fetch("/api/update-document");
-        const data: FileType = await response.json();
-        setFile(data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    fetchFileData();
-  }, []);
 
   useEffect(() => {
     if (selectedTestimony > 0) {
@@ -119,107 +80,119 @@ const Home = () => {
     };
   }, [selectedTestimony]);
 
-  const featuredProjects: ProjectProps[] =
-    (projects?.length > 0 && projects.slice(0, 4)) || [];
+  const featuredProjects: ProjectProps[] = (projects ?? []).slice(0, 4);
   return (
-    <main className="flex flex-col gap-8 -mt-[97px]">
-      <section
-        className="relative h-[800px] bg-cover bg-center w-full before:absolute before:bg-gray-500 before:bg-opacity-60 before:inset-0"
-        style={{
-          backgroundImage: `url(${coverPic.src || coverPic})`,
-        }}
-      >
-        <div className="container">
-          <div className="flex flex-col justify-center items-center gap-8 absolute inset-0 ">
-            <article className="flex flex-col items-center gap-1 text-white text-center">
-              <figure className="h-[300px] w-[300px] border-r-2 border-black rounded-full p-5 mb-3">
+    <main className="flex flex-col gap-8 -mt-[97px] relative">
+      {/* ── Hero Section ── */}
+      <section className="relative min-h-[calc(100vh-97px)] w-full flex flex-col justify-center items-center pt-[110px] sm:pt-[120px] pb-16 z-10 container mx-auto px-6 md:px-12">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Profile Avatar Column: Placed FIRST on smaller screens (order-1), SECOND on large screens (lg:order-2 lg:col-span-5) */}
+          <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col items-center justify-center z-10 relative pt-2 lg:pt-0">
+            <div className="relative">
+              {/* Profile Avatar — Rounded clean crop floating on animated background */}
+              <figure className="relative h-[240px] w-[240px] sm:h-[290px] sm:w-[290px] md:h-[340px] md:w-[340px] rounded-full overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
                 <Image
                   src={profilePic}
-                  alt={"profile-picture"}
-                  className="h-full w-full rounded-full"
-                  loading="lazy"
+                  alt={"Nabal Khadka Profile"}
+                  className="h-full w-full rounded-full object-cover"
+                  priority
                 />
               </figure>
-              <div className="flex flex-col justify-center gap-2">
-                <h1 className="text-3xl font-bold pt-4">Nabal Khadka</h1>
-                <p className="text-3xl font-bold">
-                  <ColorChangingTextCSS text="Frontend Developer" />
-                </p>
+
+              {/* Floating Stat Badge 1: Experience */}
+              <div className="absolute -bottom-2 -left-3 sm:bottom-2 sm:-left-6 bg-black/60 border border-cyan-500/30 backdrop-blur-xl px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 z-20">
+                <span className="text-xl sm:text-2xl">⚡</span>
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] sm:text-xs text-gray-400 font-medium">Experience</span>
+                  <span className="text-xs sm:text-sm font-bold text-white">3+ Years</span>
+                </div>
               </div>
-              <p className="animate-text text-base font-semibold italic text-[#200225]">
-                Bringing design to life through code.
-              </p>
-            </article>
-            <article className="flex flex-col md:hidden items-center text-center gap-3">
-              <h2 className="text-white text-sm font-semibold leading-4">
-                Want to know more?
-              </h2>
-              <figure className="w-8 h-8 animate-bounce">
-                <Image
-                  src={DownArrow}
-                  alt={"scroll down"}
-                  width={100}
-                  height={100}
-                  className="w-full h-full"
-                />
-              </figure>
-            </article>
+
+              {/* Floating Stat Badge 2: Projects */}
+              <div className="absolute -top-2 -right-3 sm:top-2 sm:-right-6 bg-black/60 border border-purple-500/30 backdrop-blur-xl px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 z-20">
+                <span className="text-xl sm:text-2xl">🚀</span>
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] sm:text-xs text-gray-400 font-medium">Completed</span>
+                  <span className="text-xs sm:text-sm font-bold text-white">15+ Projects</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <article className="flex justify-end gap-4 absolute bottom-5 right-5 md:right-10 w-full whitespace-nowrap">
-            <button className="self-end hover:bg-gradient-to-r hover:to-[#C961DE] hover:from-[#2954A3] bg-gradient-to-r from-[#C961DE] to-[#2954A3]  px-3 py-2 rounded-lg h-fit">
+
+          {/* Typography & CTAs Column: Placed SECOND on smaller screens (order-2), FIRST on large screens (lg:order-1 lg:col-span-7) */}
+          <div className="order-2 lg:order-1 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 z-10">
+            {/* Status Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-medium backdrop-blur-md shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              Available for New Opportunities
+            </div>
+
+            {/* Main Headline */}
+            <div className="flex flex-col gap-2">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-300">
+                Hi there, I&apos;m <span className="text-white font-bold drop-shadow-[0_0_12px_rgba(160,100,255,0.8)]">Nabal Khadka</span> 👋
+              </h2>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+                <ColorChangingTextCSS text="Frontend Developer" />
+              </h1>
+            </div>
+
+            {/* Rich Bio Summary */}
+            <p className="text-gray-300 text-base md:text-lg max-w-2xl leading-relaxed font-normal">
+              Passionate engineer crafting modern web applications with <strong className="text-cyan-300 font-semibold">React, Next.js, and TypeScript</strong>. Dedicated to building performant, responsive architectures with pixel-perfect interactive UI designs.
+            </p>
+
+            {/* Quick Tech Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+              {["React.js", "Next.js", "TypeScript", "Tailwind CSS", "REST APIs", "Prisma"].map((tech, i) => (
+                <span key={i} className="px-3 py-1 text-xs font-mono font-medium bg-white/5 border border-white/10 rounded-md text-gray-300 hover:border-cyan-400/50 hover:text-cyan-300 transition-colors">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {/* CTAs & Social Links Group */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4 w-full sm:w-auto">
               <a
-                download={file?.filename}
-                href={file?.url}
-                target="_blank"
-                className="text-sm text-white font-semibold"
+                href="#contact"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all transform hover:-translate-y-0.5"
               >
-                Download CV
+                Let&apos;s Connect
               </a>
-            </button>
-            <div
-              onMouseEnter={() => setShowSocial(true)}
-              onMouseLeave={() => setShowSocial(false)}
-              className="relative overflow-hidden z-[5] "
-            >
-              <div
-                className={`bg-[#0F103F] rounded-md p-2 shadow-lg flex flex-col items-center gap-2 transition-transform duration-500 border border-white  ${
-                  showSocial
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-full"
-                }`}
-              >
+
+              {file?.url && (
+                <a
+                  download={file?.filename}
+                  href={file?.url}
+                  target="_blank"
+                  className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur-md transition-all transform hover:-translate-y-0.5"
+                >
+                  Download CV
+                </a>
+              )}
+
+              {/* Inline Social Icons */}
+              <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-white/10">
                 {socialMedia.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={item.link}
-                    target="_blank"
-                    className="border border-white rounded-full"
-                  >
-                    <Image
-                      src={item.icon}
-                      alt="social media"
-                      className="w-8 h-8"
-                    />
+                  <Link key={item.id} href={item.link} target="_blank" className="p-2.5 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:scale-110 transition-all">
+                    <Image src={item.icon} alt="social media" className="w-5 h-5" />
                   </Link>
                 ))}
               </div>
-              <button className="text-sm text-white font-semibold border z-10 border-[#C961DE] hover:border-[#2954A3] px-3 py-2 rounded-lg relative">
-                Follow me
-              </button>
             </div>
-          </article>
+          </div>
+
         </div>
       </section>
-      <section className="flex relative">
+
+      {/* ── About Section ── */}
+      <section className="flex relative z-10">
         <About />
-        <div className="absolute -left-10 -top-10 w-[30%] md:full">
-          <Image src={Kohinoor} alt={""} />
-        </div>
-        <div className="absolute right-2 -bottom-20 lg:-bottom-40 ">
-          <Image src={Galaxy} alt={""} />
-        </div>
       </section>
-      <section className="flex flex-col gap-5  p-5 relative z-[5] ">
+
+      {/* ── Featured Projects ── */}
+      <section className="flex flex-col gap-5 p-5 relative z-10">
         <Header
           title={"Featured Projects"}
           description={"View the best projects from my shelf"}
@@ -238,23 +211,15 @@ const Home = () => {
               </div>
             ))}
         </Carousel>
-        <div className="absolute -bottom-20 lg:-bottom-1/3 -left-[18%] 2xl:-left-[10%] lg:w-[60%]">
-          <Image src={Diamond} alt={""} />
-        </div>
       </section>
-      <section className="relative z-[5]">
+
+      {/* ── Services / Tech Stack ── */}
+      <section className="relative z-10">
         <Services />
-        <div className="block absolute top-28 inset-0 min-[480px]:top-16 sm:top-12">
-          <Image
-            src={Ellipse}
-            alt={"ellipse"}
-            width={100}
-            height={100}
-            className="w-full h-full"
-          />
-        </div>
       </section>
-      <section className="flex flex-col gap-5 p-5 z-[5] relative">
+
+      {/* ── Testimonials ── */}
+      <section className="flex flex-col gap-5 p-5 z-10 relative">
         <Header
           title={"Testimonials"}
           description={
@@ -272,13 +237,14 @@ const Home = () => {
               </div>
             ))}
         </Carousel>
-        <div className="absolute -bottom-1/4 right-0 ">
-          <Image src={planets} alt={"planets"} />
-        </div>
       </section>
-      <section id="contact" className="z-[5]">
+
+      {/* ── Contact ── */}
+      <section id="contact" className="z-10">
         <Contact />
       </section>
+
+      {/* ── Testimony Modal ── */}
       {showModal ? (
         <div className="flex items-center z-[100] absolute inset-0 top-0 backdrop-blur-3xl ">
           {testimonies?.length > 0 && (
@@ -334,3 +300,4 @@ const Home = () => {
 };
 
 export default Home;
+
