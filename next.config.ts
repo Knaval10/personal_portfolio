@@ -14,8 +14,20 @@ const nextConfig: NextConfig = {
         hostname: "cwolspzfaaiedmynzssx.supabase.co",
         pathname: "/**",
       },
+      // Dev placeholder images
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
+      },
     ],
   },
 };
 
 export default nextConfig;
+
