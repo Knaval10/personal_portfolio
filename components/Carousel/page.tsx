@@ -20,14 +20,18 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: false,
-    centerMode: true,
-    centerPadding: "10%",
+    centerMode: false,
+    beforeChange: (_: number, next: number) => {
+      setCurrentSlide(next);
+    },
     responsive: [
       {
         breakpoint: 1280,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: "40px",
         },
       },
       {
@@ -35,6 +39,8 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: "30px",
         },
       },
       {
@@ -42,23 +48,15 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: "15px",
         },
       },
     ],
   };
 
-  const handleNext = () => {
-    if (currentSlide < totalSlides - 1) {
-      setCurrentSlide(currentSlide + 1);
-    } else setCurrentSlide(0);
-  };
-  const handlePrev = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    } else setCurrentSlide(totalSlides - 1);
-  };
   return (
-    <div className="mx-autos w-full max-w-4xls p-4 z-[5] flex flex-col gap-4">
+    <div className="mx-auto w-full max-w-7xl p-4 z-[5] flex flex-col gap-4">
       <Slider ref={sliderRef} {...settings}>
         {children}
       </Slider>
@@ -68,9 +66,8 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
         <button
           onClick={() => {
             sliderRef?.current?.slickPrev();
-            handlePrev();
           }}
-          className="text-gray-400 hover:text-[#0065F2]"
+          className="text-gray-400 hover:text-[#00e5ff] transition-colors"
         >
           <LeftArrow />
         </button>
@@ -81,12 +78,11 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
               key={idx}
               onClick={() => {
                 sliderRef.current?.slickGoTo(idx);
-                setCurrentSlide(idx);
               }}
-              className={`h-3 w-3 rounded-full transition-all ${
+              className={`h-3 w-3 rounded-full transition-all duration-300 ${
                 currentSlide === idx
-                  ? "bg-[#140125] border-[1.8px] border-gray-400"
-                  : "bg-gray-400"
+                  ? "bg-[#00e5ff] scale-125 shadow-[0_0_10px_#00e5ff]"
+                  : "bg-gray-500 hover:bg-gray-300"
               }`}
             />
           ))}
@@ -94,9 +90,8 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
         <button
           onClick={() => {
             sliderRef?.current?.slickNext();
-            handleNext();
           }}
-          className="text-gray-400 hover:text-[#0065F2]"
+          className="text-gray-400 hover:text-[#00e5ff] transition-colors"
         >
           <RightArrow />
         </button>
@@ -106,3 +101,4 @@ const Carousel = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default Carousel;
+
