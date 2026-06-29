@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/Navbar/page";
+import TechBackground from "@/components/Animation/TechBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="bg-[#0F103F] min-h-screen">
+        <div className="bg-[#070718] min-h-screen relative">
+          {/* Animated tech background — shared by all pages */}
+          <TechBackground />
+          {/* Subtle overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070718]/40 via-transparent to-[#070718]/50 pointer-events-none z-0" />
           <Navbar />
-          <div className="min-h-[calc(100vh-97px)] pt-[97px]">{children}</div>
+          <div className="relative z-10 min-h-[calc(100vh-97px)] pt-[97px]">
+            {children}
+          </div>
         </div>
       </body>
     </html>

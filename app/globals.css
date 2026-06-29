@@ -87,3 +87,28 @@ body {
   background-repeat: no-repeat;
   background-size: 0% 100%;
 }
+
+/* ── Hero avatar glowing ring ── */
+@keyframes ringRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes ringPulse {
+  0%, 100% { box-shadow: 0 0 0px 0px rgba(160, 100, 255, 0); }
+  50%       { box-shadow: 0 0 24px 6px rgba(160, 100, 255, 0.55); }
+}
+
+.hero-avatar-ring {
+  background: conic-gradient(
+    from 0deg,
+    #a064ff,
+    #32c8ff,
+    #c961de,
+    #2954a3,
+    #a064ff
+  );
+  animation: ringPulse 3s ease-in-out infinite;
+  padding: 3px;
+}
+

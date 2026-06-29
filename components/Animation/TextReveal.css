@@ -10,10 +10,11 @@
   
   @keyframes revealColor {
     from {
-      color: white; 
+      color: white;
+      -webkit-text-fill-color: white;
     }
     to {
-        background-image: linear-gradient(to right, #140125, #2c1863); 
+        background-image: linear-gradient(to right, #00e5ff, #a855f7);
         -webkit-background-clip: text; 
         background-clip: text;
         -webkit-text-fill-color: transparent;

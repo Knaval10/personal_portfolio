@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <>
       {/*Larger screens' navbar */}
-      <div className="flex items-center justify-between w-full p-5 bg-transparent fixed top-0 z-10 backdrop-blur-2xl ">
+      <div className="flex items-center justify-between w-full p-5 bg-transparent fixed top-0 z-[1000] backdrop-blur-2xl ">
         <div className="">
           <Link href="/" onClick={() => setActiveHash("")}>
             <Image src={logo} alt={"Nabal"} />
@@ -101,7 +101,7 @@ const Navbar = () => {
       {/*Smaller screens' navbar */}
       <div
         ref={navbarRef}
-        className="fixed top-0 right-0 w-32 h-32 md:hidden flex items-center z-50 p-5"
+        className="fixed top-0 right-0 w-32 h-32 md:hidden flex items-center z-[1000] p-5"
       >
         <button
           onClick={toggleMenu}
