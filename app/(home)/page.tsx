@@ -61,13 +61,12 @@ const Home = () => {
   const { data: file } = useFetch<FileType>("/api/update-document", DEV_DOCUMENT);
 
   const handleModal = (id: number) => {
-    setShowModal((prev) => !prev);
+    setShowModal(true);
     setSelectedTestimony(id);
-    scrollTo(0, 0);
   };
 
   useEffect(() => {
-    if (selectedTestimony > 0) {
+    if (showModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -75,7 +74,7 @@ const Home = () => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [selectedTestimony]);
+  }, [showModal]);
 
   const featuredProjects: ProjectProps[] = (projects ?? []).slice(0, 4);
   return (
@@ -243,7 +242,15 @@ const Home = () => {
 
       {/* ── Testimony Modal ── */}
       {showModal ? (
-        <div className="flex items-center z-[100] absolute inset-0 top-0 backdrop-blur-3xl ">
+        <div 
+          className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+              setSelectedTestimony(0);
+            }
+          }}
+        >
           {(testimonies?.length ?? 0) > 0 && (
             <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-[70vh] md:w-1/2 p-2 sm:p-5 md:p-10 relative">
               <section
