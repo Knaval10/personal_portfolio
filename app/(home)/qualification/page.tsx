@@ -2,56 +2,15 @@
 
 import Header from "@/components/Header/page";
 import TimeLine, { QualificationType } from "@/components/TimeLine/TimeLine";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useFetch } from "@/app/lib/useFetch";
+import { DEV_EDUCATION, DEV_EXPERIENCE } from "@/app/lib/devData";
 
 const Qualification: React.FC = () => {
-  const [eduData, setEduData] = useState<QualificationType[]>([]);
-  const [expData, setExpData] = useState<QualificationType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: eduData } = useFetch<QualificationType[]>("/api/update-education", DEV_EDUCATION);
+  const { data: expDataRaw } = useFetch<QualificationType[]>("/api/update-experience", DEV_EXPERIENCE);
 
-  useEffect(() => {
-    const fetchEducationData = async () => {
-      try {
-        const response = await fetch("/api/update-education");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: QualificationType[] = await response.json();
-        setEduData(data);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEducationData();
-  }, []);
-  useEffect(() => {
-    const fetchExperienceData = async () => {
-      try {
-        const response = await fetch("/api/update-experience");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: QualificationType[] = await response.json();
-        const sortedData = data.sort(
-          (a: QualificationType, b: QualificationType) => a.id - b.id
-        );
-        setExpData(sortedData);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExperienceData();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const expData = (expDataRaw ?? []).slice().sort((a, b) => a.id - b.id);
 
   return (
     <div className="flex flex-col gap-10 p-5 container">
@@ -68,8 +27,7 @@ const Qualification: React.FC = () => {
         </section>
         <section className="flex flex-col gap-4">
           <h2 className="text-white text-xl font-semibold">Education</h2>
-
-          <TimeLine qualificationData={eduData} />
+          <TimeLine qualificationData={eduData ?? []} />
         </section>
       </div>
     </div>
