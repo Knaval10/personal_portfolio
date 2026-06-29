@@ -60,6 +60,7 @@ const TechBackground: React.FC = () => {
 
     /* ── init ─────────────────────────────────────────────────── */
     function init() {
+      if (!canvas) return;
       W = canvas.width = canvas.offsetWidth;
       H = canvas.height = canvas.offsetHeight;
 
@@ -118,6 +119,7 @@ const TechBackground: React.FC = () => {
 
     /* ── draw ─────────────────────────────────────────────────── */
     function draw() {
+      if (!ctx) return;
       frame++;
       ctx.clearRect(0, 0, W, H);
 

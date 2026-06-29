@@ -8,7 +8,6 @@ import Contact from "./contact/page";
 import Carousel from "@/components/Carousel/page";
 import ProjectCard, { ProjectProps } from "@/components/Card/ProjectCard";
 import ColorChangingTextCSS from "@/components/Animation/ColorChangingTextCSS";
-import TechBackground from "@/components/Animation/TechBackground";
 import fbIcon from "../assets/icons/Facebook.svg";
 import ldIcon from "../assets/icons/Linkedin.svg";
 import ghIcon from "../assets/icons/Github.svg";
@@ -20,7 +19,6 @@ import LeftArrow from "../assets/dynamic/LeftArrow";
 import RightArrow from "../assets/dynamic/RightArrow";
 import CrossIcon from "../assets/dynamic/CrossIcon";
 import Services from "@/components/Services/Services";
-import DownArrow from "../../app/assets/icons/ArrowDown.svg";
 import { useFetch } from "@/app/lib/useFetch";
 import { DEV_PROJECTS, DEV_TESTIMONIALS, DEV_DOCUMENT } from "@/app/lib/devData";
 
@@ -53,7 +51,6 @@ interface FileType {
 }
 
 const Home = () => {
-  const [showSocial, setShowSocial] = useState(false);
   const [selectedTestimony, setSelectedTestimony] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
   const [animationDirection, setAnimationDirection] = useState<"left" | "right">("right");
@@ -227,8 +224,8 @@ const Home = () => {
           }
         />
         <Carousel>
-          {testimonies?.length > 0 &&
-            testimonies.map((item, idx: number) => (
+          {(testimonies?.length ?? 0) > 0 &&
+            testimonies!.map((item, idx: number) => (
               <div key={idx} className="p-2 w-full">
                 <TestimonyCard
                   item={item}
@@ -247,7 +244,7 @@ const Home = () => {
       {/* ── Testimony Modal ── */}
       {showModal ? (
         <div className="flex items-center z-[100] absolute inset-0 top-0 backdrop-blur-3xl ">
-          {testimonies?.length > 0 && (
+          {(testimonies?.length ?? 0) > 0 && (
             <div className="flex items-center justify-center gap-5 container rounded-xl bg-[#0F103F] bg-opacity-40  h-[80vh] sm:h-[70vh] md:w-1/2 p-2 sm:p-5 md:p-10 relative">
               <section
                 onClick={() => {
@@ -277,7 +274,7 @@ const Home = () => {
                       : "animate-slide-left"
                   }`}
                 >
-                  <TestimonyPopup item={testimonies[selectedTestimony - 1]} />
+                  <TestimonyPopup item={testimonies![selectedTestimony - 1]} />
                 </div>
               </div>
 
@@ -286,7 +283,7 @@ const Home = () => {
                   setSelectedTestimony(selectedTestimony + 1);
                   setAnimationDirection("right");
                 }}
-                disabled={selectedTestimony === testimonies?.length}
+                disabled={selectedTestimony === (testimonies?.length ?? 0)}
                 className="disabled:cursor-not-allowed hover:text-[#0065F2] text-white disabled:hover:text-gray-400"
               >
                 <RightArrow />
