@@ -60,6 +60,20 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen((prevState) => !prevState);
   };
+
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setActiveHash("#contact");
+
+    if (pathname === "/") {
+      e.preventDefault();
+      const contactEl = document.getElementById("contact");
+      if (contactEl) {
+        contactEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.pushState(null, "", "/#contact");
+      }
+    }
+  };
+
   return (
     <>
       {/*Larger screens' navbar */}
@@ -79,9 +93,7 @@ const Navbar = () => {
               <Link
                 key={nav?.id}
                 href={nav?.link}
-                onClick={() => {
-                  if (isContact) setActiveHash("#contact");
-                }}
+                onClick={isContact ? handleContactClick : undefined}
                 className={`p-2 font-semibold border-b-2 ${
                   pathname === nav?.link ||
                   (pathname === "/" &&
